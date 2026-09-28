@@ -15,6 +15,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application source
 COPY . .
 
+# Grant execution permissions to entrypoint script
+RUN chmod +x entrypoint.sh
+
+# Cloud Run dynamic PORT binding (defaults to 8000)
+ENV PORT=8000
+
 EXPOSE 8000
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+ENTRYPOINT ["/app/entrypoint.sh"]
